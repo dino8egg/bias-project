@@ -34,8 +34,10 @@ def crawl_test():
 				author_name = ' '.join(author_name.split())
 				paper_author["name"] = author_name
 
-				author_affiliation = author_info[1].find(text=True)
-				author_affiliation = ' '.join(author_name.split())
+				author_affiliation = ''
+				if len(author_info) > 1:
+					author_affiliation = author_info[1].find(text=True)
+					author_affiliation = ' '.join(author_name.split())
 				paper_author["affiliation"] = author_affiliation
 				paper_authorlist.append(paper_author)
 			paper_authors = ','.join(["("+author['name']+","+author['affiliation']+")" for author in paper_authorlist])
