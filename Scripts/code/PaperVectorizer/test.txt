@@ -1,1 +1,1 @@
-This is research about fairness and bias.
+An Image Wherever You Look! Making Vision Just Another Sensor for AI/Robotics Projects

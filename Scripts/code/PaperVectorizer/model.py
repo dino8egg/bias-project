@@ -5,12 +5,12 @@ MAX_EPOCHS = 100
 VEC_SIZE = 100
 ALPHA = 0.025
 MIN_ALPHA = 0.00025
-MIN_COUNT = 20
+MIN_COUNT = 10
 WINDOW = 8
 DM = 0
 DBOW_WORDS = 1
 HS = 1
-NEGATIVE = 10
+NEGATIVE = 5
 cores = multiprocessing.cpu_count()
 
 class Doc2VecModel():

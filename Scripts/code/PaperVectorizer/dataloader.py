@@ -27,7 +27,7 @@ def data_tagger(paper_dir):
 	# deactivated code: without tokenize_string preprocessing
 	# tagged_data = [TaggedDocument(words=word_tokenize(paper[4].lower()), tags=paper[2]) for paper in paper_list]
 	tagged_data = []
-	for paper in paper_list[:500]:
+	for paper in paper_list:
 		title = paper[2].lower()
 		abstract = paper[4].lower()
 		tokenized_words = tokenize_string(abstract)
