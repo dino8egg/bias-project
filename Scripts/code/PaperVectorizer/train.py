@@ -3,7 +3,7 @@ import time
 from model import Doc2VecModel
 from dataloader import data_tagger
 
-PAPER_DIR = "/Users/hyungjun/Documents/2019_DSLAB/Bias/data/AAAI_2019_info.tsv"
+PAPER_DIR = "./data/AAAI_2019.csv"
 
 def train(modelfile):
 	model = Doc2VecModel()
