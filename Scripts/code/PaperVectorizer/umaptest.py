@@ -34,11 +34,12 @@ with open("./data/positive_labels.tsv", 'r', encoding='UTF8') as f:
 			positive.append(line)
 
 model = Doc2Vec.load(sys.argv[1])
+print(len(negative), len(positive))
 
-positive_vectors = [model.infer_vector(tokenize_string(s[1])) for s in positive]
-negative_vectors = [model.infer_vector(tokenize_string(s[1])) for s in negative[-126:]]
-positive_labels = [0 for s in positive]
-negative_labels = [1 for s in negative[-126:]]
+# positive_vectors = [model.infer_vector(tokenize_string(s[1])) for s in positive]
+# negative_vectors = [model.infer_vector(tokenize_string(s[1])) for s in negative]
+# positive_labels = [0 for s in positive]
+# negative_labels = [1 for s in negative]
 
 # nb = Pipeline([('vect', CountVectorizer()),
 #                ('tfidf', TfidfTransformer()),
@@ -52,9 +53,9 @@ negative_labels = [1 for s in negative[-126:]]
 # negative_vectors = tfid.fit_transform(negative_vectors)
 # print(type(positive_vectors[1]))
 
-model = TSNE(learning_rate=100)
-transformed = model.fit_transform(positive_vectors+negative_vectors)
-xs = transformed[:,0]
-ys = transformed[:,1]
-plt.scatter(xs, ys, c=positive_labels+negative_labels)
-plt.show()
+# model = TSNE(learning_rate=100)
+# transformed = model.fit_transform(positive_vectors+negative_vectors)
+# xs = transformed[:,0]
+# ys = transformed[:,1]
+# plt.scatter(xs, ys, c=positive_labels+negative_labels)
+# plt.show()

@@ -14,28 +14,46 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.metrics import classification_report
 from sklearn.metrics import accuracy_score
 
-negative = []
-with open("./data/negative_labels.tsv", 'r', encoding='UTF8') as f:
-	reader = csv.reader(f, delimiter='\t')
-	for line in reader:
-		if len(line) > 0:
-			negative.append(line)
+# negative = []
+# with open("./data/negative_labels.tsv", 'r', encoding='UTF8') as f:
+# 	reader = csv.reader(f, delimiter='\t')
+# 	for line in reader:
+# 		if len(line) > 0:
+# 			negative.append(line)
 
-positive = []
-with open("./data/positive_labels.tsv", 'r', encoding='UTF8') as f:
-	reader = csv.reader(f, delimiter='\t')
-	for line in reader:
-		if len(line) > 0:
-			positive.append(line)
+# positive = []
+# with open("./data/positive_labels.tsv", 'r', encoding='UTF8') as f:
+# 	reader = csv.reader(f, delimiter='\t')
+# 	for line in reader:
+# 		if len(line) > 0:
+# 			positive.append(line)
 
-random.shuffle(negative)
-random.shuffle(positive)
+# random.shuffle(negative)
+# random.shuffle(positive)
 
-length = len(positive)
-negative_data = negative[:length]
+# length = len(positive)
+# negative_data = negative[:length]
 
-train_data = negative_data[:length//5*4]+positive[:length//5*4]
-test_data = negative_data[length//5*4:]+positive[length//5*4:]
+# train_data = negative_data[:length//5*4]+positive[:length//5*4]
+# test_data = negative_data[length//5*4:]+positive[length//5*4:]
+
+train_data = []
+with open("./data/train_1.tsv", 'r', encoding='UTF8') as f:
+  reader = csv.reader(f, delimiter='\t')
+  for line in reader:
+    if len(line) > 0:
+      train_data.append(line)
+
+random.shuffle(train_data)
+
+test_data = []
+with open("./data/test_1.tsv", 'r', encoding='UTF8') as f:
+  reader = csv.reader(f, delimiter='\t')
+  for line in reader:
+    if len(line) > 0:
+      test_data.append(line)
+
+random.shuffle(test_data)
 
 train_X = [s[1] for s in train_data]
 train_y = [s[2] for s in train_data]
@@ -55,9 +73,27 @@ logreg_doc2vec.fit(train_X_doc2vec, train_y)
 pred_y_sgd_doc2vec = sgd_doc2vec.predict(test_X_doc2vec)
 pred_y_logreg_doc2vec = logreg_doc2vec.predict(test_X_doc2vec)
 
+test_data2 = []
+with open("./data/fat_test.tsv", 'r', encoding='UTF8') as f:
+  reader = csv.reader(f, delimiter='\t')
+  for line in reader:
+    if len(line) > 0:
+      test_data2.append(line)
+
+train_X_doc2vec = [model.infer_vector(tokenize_string(s)) for s in train_X]
+test_X_doc2vec = [model.infer_vector(tokenize_string(s)) for s in test_X]
+
 print('doc2vec model')
 print('sgd accuracy %s' % accuracy_score(pred_y_sgd_doc2vec, test_y))
 print('logreg accuracy %s\n' % accuracy_score(pred_y_logreg_doc2vec, test_y))
+
+train_X_doc2vec = [model.infer_vector(tokenize_string(s[0])) for s in test_data2]
+test_X_doc2vec = [model.infer_vector(tokenize_string(s[0])) for s in test_data2]
+pred_y_sgd_doc2vec2 = sgd_doc2vec.predict(test_X_doc2vec)
+pred_y_logreg_doc2vec2 = logreg_doc2vec.predict(test_X_doc2vec)
+
+print('sgd accuracy2 %s' % accuracy_score(pred_y_sgd_doc2vec2, [s[1] for s in test_data2]))
+print('logreg accuracy2 %s\n' % accuracy_score(pred_y_logreg_doc2vec2, [s[1] for s in test_data2]))
 
 nb = Pipeline([('vect', CountVectorizer()),
                ('tfidf', TfidfTransformer()),
