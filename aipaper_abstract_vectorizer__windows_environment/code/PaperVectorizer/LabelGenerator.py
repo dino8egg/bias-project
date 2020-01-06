@@ -45,7 +45,7 @@ def test(modelfile):
   # logreg_doc2vec.fit(train_X_doc2vec, train_y)
 
   filenames = os.listdir(AAAI_DIR)
-  for filename in filenames[:1]:
+  for filename in filenames:
     fullname = AAAI_DIR+'/'+filename
 
     aaai_info = []
@@ -66,4 +66,4 @@ def test(modelfile):
 
 if __name__=='__main__':
   # Use models/aaai_aies.model for labeling
-  test('./models/aaai_aies.model')
+  test('./models/aaai_aies2.model')
